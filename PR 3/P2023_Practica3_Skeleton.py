@@ -54,8 +54,10 @@ def uoc_VerifyNumPoints(curve, n):
     result = False
 
     #### IMPLEMENTATION GOES HERE ####
-
-
+    # We first get the values of the curve
+    num_points = uoc_ComputePoints(curve)
+    # We assign the result of the comparison to the variable result
+    result = num_points == n
     # --------------------------------
 
     return result
