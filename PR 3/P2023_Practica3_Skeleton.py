@@ -8,21 +8,6 @@ P_INFINITY = (None, None)
 # --- IMPLEMENTATION GOES HERE -----------------------------------------------
 #  Student helpers (functions, constants, etc.) can be defined here, if needed
 
-def is_quadratic_residue(n, p):
-    return pow(n, (p - 1) // 2, p) == 1
-
-def modular_sqrt(n, p):
-    if p % 4 == 3:
-        return pow(n, (p + 1) // 4, p)
-    elif p % 8 == 5:
-        v = pow(2 * n, (p - 5) // 8, p)
-        i = pow(2 * n * v * v, (p - 1) // 4, p)
-        return (n * v * (i - 1) // 2) % p
-    else:
-        # En otros casos, se puede utilizar fuerza bruta para encontrar la raíz cuadrada
-        for i in range(p):
-            if i * i % p == n:
-                return i
 # ----------------------------------------------------------------------------
 
 
