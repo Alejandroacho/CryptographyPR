@@ -78,8 +78,43 @@ def uoc_AddPoints(curve, P, Q):
     suma = None
 
     #### IMPLEMENTATION GOES HERE ####
+    # We first get the values of the curve
+    a = curve[0]
+    b = curve[1]
+    p = curve[2]
+    # We get the values of the points
+    x1 = P[0]
+    y1 = P[1]
+    # We get the values of the points
+    x2 = Q[0]
+    y2 = Q[1]
 
+    # If one element is P_INFINITY, we return the other
+    if x1 in P_INFINITY or x2 in P_INFINITY or y1 in P_INFINITY or y2 in P_INFINITY:
+        return P if x2 in P_INFINITY else Q
 
+    # We check if the points are equal
+    if x1 != x2:
+        # If they are, we compute the slope of the tangent line P-Q
+        sc = (y2 - y1) * pow(x2 - x1, p - 2, p)
+        # We compute the new x and y coordinates
+        x3 = ((sc * sc) - x1 - x2) % p
+        y3 = (sc * (x1 - x3) - y1) % p
+
+    # If P = Q, we use the tangent method
+    elif P == Q and y1 != 0:
+        # We compute the slope of the tangent line in P
+        st = (3 * x1 * x1 + a) * pow(2 * y1, p - 2, p)
+        # We compute the new x and y coordinates
+        x3 = ((st * st) - x1 - x2) % p
+        y3 = (st * (x1 - x3) - y1) % p
+
+    # If x1 = x2 and y1 = -y2, we return P_INFINITY
+    elif x1 == x2 and y1 == -y2:
+        x3 = P_INFINITY[0]
+        y3 = P_INFINITY[1]
+
+    suma = (x3, y3)
     # --------------------------------
     return suma
 
