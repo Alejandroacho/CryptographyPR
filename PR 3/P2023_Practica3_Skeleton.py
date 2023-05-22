@@ -134,8 +134,22 @@ def uoc_SelfProductPoint(curve, n, P):
     product = None
 
     #### IMPLEMENTATION GOES HERE ####
-
-
+    # We first get the values of the curve
+    a = curve[0]
+    b = curve[1]
+    p = curve[2]
+    # We get the values of the point
+    x = P[0]
+    y = P[1]
+    # We initialize the result to P_INFINITY
+    product = P_INFINITY
+    # We iterate over the bits of n
+    for bit in bin(n)[2:]:
+        # We double the point
+        product = uoc_AddPoints(curve, product, product)
+        # If the bit is 1, we add the point
+        if bit == '1':
+            product = uoc_AddPoints(curve, product, P)
     # --------------------------------
     return product
 
