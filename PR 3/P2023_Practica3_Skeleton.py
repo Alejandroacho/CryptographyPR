@@ -167,9 +167,13 @@ def uoc_IsGroup(curve):
     result = None
 
     #### IMPLEMENTATION GOES HERE ####
+    # We first get the values of the curve
+    a = curve[0]
+    b = curve[1]
+    p = curve[2]
 
-
-
+    # We check if the curve is a group
+    result = (4 * pow(a, 3, p) + 27 * pow(b, 2, p)) % p != 0
     # --------------------------------
     return result
 
