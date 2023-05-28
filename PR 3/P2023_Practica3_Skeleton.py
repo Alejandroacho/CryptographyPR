@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from random import randint
+
 
 P_INFINITY = (None, None)
 
@@ -8,6 +10,15 @@ P_INFINITY = (None, None)
 # --- IMPLEMENTATION GOES HERE -----------------------------------------------
 #  Student helpers (functions, constants, etc.) can be defined here, if needed
 
+def multiply_point(P, n, curve):
+    a, b, p = curve
+    Q = None
+    # Duplicar el punto P de la curva n veces
+    for bit in bin(n)[2:]:
+        Q = uoc_AddPoints(curve, Q, Q)
+        if bit == '1':
+            Q = uoc_AddPoints(curve, P, Q)
+    return Q
 # ----------------------------------------------------------------------------
 
 
@@ -81,6 +92,12 @@ def uoc_AddPoints(curve, P, Q):
     a = curve[0]
     b = curve[1]
     p = curve[2]
+
+    if P is None:
+        return Q
+    if Q is None:
+        return P
+
     # We get the values of the points
     x1 = P[0]
     y1 = P[1]
@@ -209,8 +226,12 @@ def uoc_GenKey(curve, P):
     key = (None, None)
 
     #### IMPLEMENTATION GOES HERE ####
-
-
+    a, b, p = curve
+    # Generar un número aleatorio para la clave privada
+    priv = randint(1, p-1)
+    # Calcular la clave pública multiplicando el generador P por la clave privada
+    pub = multiply_point(P, priv, curve)
+    key = (pub, priv)
     # --------------------------------
     return key
 
@@ -229,7 +250,6 @@ def uoc_SharedKey(curve, priv_user1, pub_user2):
     shared = None
 
     #### IMPLEMENTATION GOES HERE ####
-
-
+    shared = multiply_point(pub_user2, priv_user1, curve)
     # --------------------------------
     return shared
