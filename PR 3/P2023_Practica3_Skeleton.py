@@ -64,7 +64,6 @@ def uoc_VerifyNumPoints(curve, n):
 
 
 
-
 def uoc_AddPoints(curve, P, Q):
     """
     EXERCISE 2.1: Add two points
@@ -110,14 +109,13 @@ def uoc_AddPoints(curve, P, Q):
         y3 = (st * (x1 - x3) - y1) % p
 
     # If x1 = x2 and y1 = -y2, we return P_INFINITY
-    elif x1 == x2 and y1 == -y2:
+    else:
         x3 = P_INFINITY[0]
         y3 = P_INFINITY[1]
 
     suma = (x3, y3)
     # --------------------------------
     return suma
-
 
 
 
@@ -179,13 +177,10 @@ def uoc_IsGroup(curve):
 
 
 
-
-
 def uoc_OrderPoint(curve, P):
     """
     EXERCISE 3.3: Point order
     :curve: a list with the curve values [a, b, p]
-    :n: constant to multiply
     :P: a point as a pair (x, y)
     :return: nP
     """
@@ -193,13 +188,13 @@ def uoc_OrderPoint(curve, P):
     point_order = None
 
     #### IMPLEMENTATION GOES HERE ####
-
-
+    point_order = 1
+    k = 1
+    while k != P_INFINITY:
+        point_order += 1
+        k = uoc_SelfProductPoint(curve, point_order, P)
     # --------------------------------
     return point_order
-
-
-
 
 
 
