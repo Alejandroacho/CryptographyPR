@@ -11,11 +11,15 @@ P_INFINITY = (None, None)
 #  Student helpers (functions, constants, etc.) can be defined here, if needed
 
 def multiply_point(P, n, curve):
+    # We get the values of the curve
     a, b, p = curve
+    # We set the initial value of Q to None
     Q = None
-    # Duplicar el punto P de la curva n veces
+    # We iterate over the bits of n
     for bit in bin(n)[2:]:
+        # We double the point
         Q = uoc_AddPoints(curve, Q, Q)
+        # If the bit is 1, we add the point
         if bit == '1':
             Q = uoc_AddPoints(curve, P, Q)
     return Q
@@ -205,10 +209,15 @@ def uoc_OrderPoint(curve, P):
     point_order = None
 
     #### IMPLEMENTATION GOES HERE ####
+    # We first set the point order to 1
     point_order = 1
+    # We set the initial value of k to 1
     k = 1
+    # We iterate over the points until we get P_INFINITY
     while k != P_INFINITY:
+        # We compute the next point
         point_order += 1
+        # We compute the product of the point
         k = uoc_SelfProductPoint(curve, point_order, P)
     # --------------------------------
     return point_order
@@ -227,9 +236,9 @@ def uoc_GenKey(curve, P):
 
     #### IMPLEMENTATION GOES HERE ####
     a, b, p = curve
-    # Generar un número aleatorio para la clave privada
+    # We generate a random private key
     priv = randint(1, p-1)
-    # Calcular la clave pública multiplicando el generador P por la clave privada
+    # We compute the public key
     pub = multiply_point(P, priv, curve)
     key = (pub, priv)
     # --------------------------------
@@ -250,6 +259,7 @@ def uoc_SharedKey(curve, priv_user1, pub_user2):
     shared = None
 
     #### IMPLEMENTATION GOES HERE ####
+    # We compute the shared secret
     shared = multiply_point(pub_user2, priv_user1, curve)
     # --------------------------------
     return shared
